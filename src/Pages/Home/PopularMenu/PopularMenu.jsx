@@ -1,22 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import SectionTile from '../../../components/SectionTile/SectionTile';
 import MenuItem from '../../Shared/MenuItem/MenuItem';
-
+import useMenu from '../../../hooks/UseMenu';
 const PopularMenu = () => {
 
 
-    const [menu, setMenu] = useState([])
+const [menu] = useMenu();
 
+ const popular = menu.filter(item => item.category === 'popular')
 
-    useEffect(() => {
-        fetch('menu.json')
-            .then(res => res.json())
-            .then(data => {
-                console.log(data)
-                const popularItems = data.filter(item => item.category === 'popular');
-                setMenu(popularItems)
-            })
-    }, [])
+    
     return (
         <section className="mb-12">
             <SectionTile
@@ -25,7 +18,7 @@ const PopularMenu = () => {
             ></SectionTile>
             <div className="grid md:grid-cols-2 gap-10">
                 {
-                    menu.map(item => <MenuItem
+                    popular.map(item => <MenuItem
                         item={item}
                         key={item._id}
                     ></MenuItem>)

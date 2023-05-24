@@ -45,12 +45,12 @@ const Navbar = () => {
                     </li>
                     <li>
                     <Link
-                            to='/shop'
-                            aria-label='shop'
-                            title='shop'
+                            to='/order'
+                            aria-label='order'
+                            title='order'
                             className={({ isActive }) => (isActive ? 'active' : 'default')}
                         >
-                            Our Shop
+                            Order Food
                         </Link>
                     </li>
                     <li>

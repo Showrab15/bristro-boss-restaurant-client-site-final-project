@@ -4,15 +4,19 @@ import Category from '../Category/Category';
 import PopularMenu from '../PopularMenu/PopularMenu';
 import Featured from '../Featured/Featured';
 import Testimonial from '../Testimonial/Testimonial';
+import { Helmet } from 'react-helmet';
 
 const Home = () => {
     return (
         <div>
-<Banner></Banner>
-<Category></Category>
-<PopularMenu></PopularMenu>
-<Featured></Featured>
-<Testimonial></Testimonial>
+            <Helmet>
+            <title>Bistro Boss || Home</title>
+            </Helmet>
+            <Banner></Banner>
+            <Category></Category>
+            <PopularMenu></PopularMenu>
+            <Featured></Featured>
+            <Testimonial></Testimonial>
         </div>
     );
 };
