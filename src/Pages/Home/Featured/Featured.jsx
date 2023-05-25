@@ -1,14 +1,18 @@
 import React from 'react';
-import SectionTile from '../../../components/SectionTile/SectionTile';
 import featuredItem from '../../../assets/home/featured.jpg'
 import './Featured.css'
+import SectionTitle from '../../../components/SectionTtile/SectionTitle';
 const Featured = () => {
     return (
         <div className="featured-item bg-fixed text-white  pt-8 my-20">
-            <SectionTile
-            subHeading="Check It Out"
-            heading="Featured Items"
-            ></SectionTile>
+
+
+            <SectionTitle
+
+                subHeading="Check It Out"
+                heading="Featured Items">
+                    
+                </SectionTitle>
             <div className="md:flex justify-center items-center bg-slate-500 bg-opacity-40 px-36 pb-20 pt-12 gap-8">
                 <div>
                     <img src={featuredItem} alt="" />

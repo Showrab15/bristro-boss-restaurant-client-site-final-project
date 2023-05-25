@@ -45,7 +45,7 @@ const Navbar = () => {
                     </li>
                     <li>
                     <Link
-                            to='/order'
+                            to='/order/salad'
                             aria-label='order'
                             title='order'
                             className={({ isActive }) => (isActive ? 'active' : 'default')}

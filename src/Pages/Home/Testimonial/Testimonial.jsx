@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import SectionTile from '../../../components/SectionTile/SectionTile';
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
@@ -14,6 +13,7 @@ import { Rating } from '@smastrom/react-rating'
 
 import '@smastrom/react-rating/style.css'
 import { FaQuoteLeft } from 'react-icons/fa';
+import SectionTitle from '../../../components/SectionTtile/SectionTitle';
 
 
 const Testimonial = () => {
@@ -21,7 +21,7 @@ const Testimonial = () => {
     const [reviews, setReviews] = useState([])
 
     useEffect(()=>{
-        fetch('reviews.json')
+        fetch('http://localhost:5000/reviews')
         .then(res => res.json())
         .then(data => {
             console.log(data)
@@ -30,10 +30,10 @@ const Testimonial = () => {
     },[])
     return (
         <section>
-            <SectionTile
+            <SectionTitle
             subHeading="what our client say's"
             heading="Testimonials"
-            ></SectionTile>
+            ></SectionTitle>
              <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
      {
         reviews.map( review => 
