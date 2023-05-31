@@ -19,7 +19,7 @@ const pagination = {
 
 
 const OrderTab = ({ items }) => {
-    console.log(items)
+    // console.log(items)
     return (
         <div >
 

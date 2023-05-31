@@ -11,18 +11,18 @@ import { Helmet } from 'react-helmet';
 
 const Order = () => {
 
-    const categories = ['salad', 'pizza', 'soup', 'desert', 'drinks'];
+    const categories = ['salad', 'pizza', 'soup', 'dessert', 'drinks'];
     const { category } = useParams();
     const initialIndex = categories.indexOf(category)
     const [tabIndex, setTabIndex] = useState(initialIndex);
     const [menu] = useMenu();
 
-    console.log(category);
+    // console.log(category);
 
     const salads = menu.filter(item => item.category === 'salad');
     const pizzas = menu.filter(item => item.category === 'pizza');
     const soups = menu.filter(item => item.category === 'soup');
-    const deserts = menu.filter(item => item.category === 'dessert');
+    const desserts = menu.filter(item => item.category === 'dessert');
     const drinks = menu.filter(item => item.category === 'drinks');
     
     return (
@@ -34,7 +34,7 @@ const Order = () => {
                     <Tab>Salad</Tab>
                     <Tab>Pizza</Tab>
                     <Tab>Soup</Tab>
-                    <Tab>Desert</Tab>
+                    <Tab>dessert</Tab>
                     <Tab>Drinks</Tab>
                 </TabList>
                 <div className="mt-8">
@@ -52,7 +52,7 @@ const Order = () => {
                     </TabPanel>
 
                     <TabPanel>
-                        <OrderTab items={deserts}></OrderTab>
+                        <OrderTab items={desserts}></OrderTab>
                     </TabPanel>
 
                     <TabPanel>

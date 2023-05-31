@@ -1,70 +1,123 @@
 import React, { useState } from 'react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../../Providers/AuthProvider';
+import { FaShoppingCart } from 'react-icons/fa';
+import useCart from '../../../hooks/useCart';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
 
+
+    const { user, logOut } = useContext(AuthContext);
+
+
+    const [cart] = useCart()
+    const handleLogOut = () => {
+        logOut()
+            .then(() => { })
+            .catch(error => console.log(error));
+    }
     const navOptions = <>
-       <li>
-                        <Link
-                            to='/'
-                            aria-label='Home'
-                            title='Home'
-                            className={({ isActive }) => (isActive ? 'active' : 'default')}
-                        >
-                            Home
-                        </Link>
-                    </li>
-                    <li>
-                        <Link
-                            to='/ContactUs'
-                            aria-label='ContactUs'
-                            title='ContactUs'
-                            className={({ isActive }) => (isActive ? 'active' : 'default')}
-                        >
-                            Contact Us
-                        </Link>
-                    </li>
-                    <li>
-                        <Link to='/Dashboard' aria-label='Dashboard' title='Dashboard'>
-                             Dashboard
-                        </Link>
-                    </li>
+        <li>
+            <Link
+                to='/'
+                aria-label='Home'
+                title='Home'
+                className={({ isActive }) => (isActive ? 'active' : 'default')}
+            >
+                Home
+            </Link>
+        </li>
+
+        <li>
+            <Link
+                to='/ContactUs'
+                aria-label='ContactUs'
+                title='ContactUs'
+                className={({ isActive }) => (isActive ? 'active' : 'default')}
+            >
+                Contact Us
+            </Link>
+        </li>
+
+        <li>
+            <Link to='/Dashboard' aria-label='Dashboard' title='Dashboard'>
+                Dashboard
+            </Link>
+        </li>
+
+        <li>
+            <Link
+                to='/menu'
+                aria-label='menu'
+                title='menu'
+                className={({ isActive }) => (isActive ? 'active' : 'default')}
+            >
+                Our Menu
+            </Link>
+        </li>
 
 
-                    <li>
-                        <Link
-                            to='/menu'
-                            aria-label='menu'
-                            title='menu'
-                            className={({ isActive }) => (isActive ? 'active' : 'default')}
-                        >
-                            Our Menu
-                        </Link>
-                    </li>
-                    <li>
+        <li>
+            <Link
+                to='/dashboard/myCart'
+                aria-label=''
+                title=''
+                className={({ isActive }) => (isActive ? 'active' : 'default')}
+            >
+                <button className="btn gap-2">
+                    <FaShoppingCart></FaShoppingCart>
+                    <div className="badge badge-secondary">+{cart?.length}</div>
+                </button>
+            </Link>
+        </li>
+
+        <li>
+            <Link
+                to='/order/salad'
+                aria-label='order'
+                title='order'
+                className={({ isActive }) => (isActive ? 'active' : 'default')}
+            >
+                Order Food
+            </Link>
+        </li>
+
+        <li>
+            <Link
+                to='/secret'
+                aria-label='secret'
+                title='secret'
+                className={({ isActive }) => (isActive ? 'active' : 'default')}
+            >
+                Secret
+            </Link>
+        </li>
+
+        <li>
+            {
+                user ? <Link
+                    onClick={handleLogOut}
+                    aria-label='logout'
+                    title='logout'
+                    className={({ isActive }) => (isActive ? 'active' : 'default')}
+                >
+                    <button className="btn btn-secondary">Logout</button>
+                </Link> :
                     <Link
-                            to='/order/salad'
-                            aria-label='order'
-                            title='order'
-                            className={({ isActive }) => (isActive ? 'active' : 'default')}
-                        >
-                            Order Food
-                        </Link>
-                    </li>
-                    <li>
-                    <Link
-                            to='/login'
-                            aria-label='login'
-                            title='login'
-                            className={({ isActive }) => (isActive ? 'active' : 'default')}
-                        >
-                            <button className="btn btn-secondary">Login</button>
-                        </Link>
-                    </li>
+                        to='/login'
+                        aria-label='login'
+                        title='login'
+                        className={({ isActive }) => (isActive ? 'active' : 'default')}
+                    >
+                        <button className="btn btn-secondary">Login</button>
+                    </Link>
+            }
+        </li>
     </>
-    
+
     return (
         <div className=''>
             <div className='fixed text-white navbar max-w-screen-xl   z-10 px-4 py-4 glass flex items-center justify-between'>
@@ -75,15 +128,15 @@ const Navbar = () => {
                     className='inline-flex items-center'
                 >
                     <div className='flex items-center justify-center '>
-                        <h1 className="text-2xl font-bold">Bristro Boss</h1> 
-                       
+                        <h1 className="text-2xl font-bold">Bristro Boss</h1>
+
                     </div>
 
                 </Link>
                 <ul className='items-center text-base font-medium hidden space-x-8 lg:flex'>
-                 {navOptions}
+                    {navOptions}
                 </ul>
-              
+
                 <div className='lg:hidden'>
                     <button
                         aria-label='Open Menu'
@@ -143,11 +196,11 @@ const Navbar = () => {
                                 </div>
                                 <nav>
                                     <ul className='space-y-4'>
-                                     {navOptions}
+                                        {navOptions}
 
 
                                     </ul>
-                                 
+
                                 </nav>
                             </div>
                         </div>
