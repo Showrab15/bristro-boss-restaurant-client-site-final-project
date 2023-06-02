@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
-import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { AuthContext } from '../../../Providers/AuthProvider';
 import { FaShoppingCart } from 'react-icons/fa';
 import useCart from '../../../hooks/useCart';
+import useAuth from '../../../hooks/useAuth';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
 
 
-    const { user, logOut } = useContext(AuthContext);
+    const { user, logOut } = useAuth();
 
 
     const [cart] = useCart()
@@ -96,6 +95,19 @@ const Navbar = () => {
             </Link>
         </li>
 
+{
+    user &&    <li>
+    <Link
+        to='/'
+        aria-label=''
+        title=''
+        className={({ isActive }) => (isActive ? 'active' : 'default')}
+    >
+        {user.displayName}
+    </Link>
+</li>
+
+}
         <li>
             {
                 user ? <Link
