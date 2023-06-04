@@ -1,91 +1,97 @@
-import React from 'react';
-import SectionTitle from '../../../components/SectionTtile/SectionTitle'
-import { Helmet } from 'react-helmet-async';
+import { useForm } from 'react-hook-form';
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
+import Swal from "sweetalert2";
+
+const img_hosting_token = import.meta.env.VITE_Image_hosting_token;
+
 const AddItem = () => {
+    const [axiosSecure] = useAxiosSecure();
+    const { register, handleSubmit, reset } = useForm();
+    const img_hosting_url = `https://api.imgbb.com/1/upload?key=${img_hosting_token}`
+
+    const onSubmit = data => {
+        
+        const formData = new FormData();
+        formData.append('image', data.image[0])
+
+        fetch(img_hosting_url, {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(imgResponse => {
+            if(imgResponse.success){
+                const imgURL = imgResponse.data.display_url;
+                const {name, price, category, recipe} = data;
+                const newItem = {name, price: parseFloat(price), category, recipe, image:imgURL}
+                console.log(newItem)
+                axiosSecure.post('/menu', newItem)
+                .then(data => {
+                    console.log('after posting new menu item', data.data)
+                    if(data.data.insertedId){
+                        reset();
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Item added successfully',
+                            showConfirmButton: false,
+                            timer: 1500
+                          })
+                    }
+                })
+            }
+        })
+
+    };
+    
+    
     return (
-        <div className="w-full">
-            <Helmet><title>Bistro Boss || Dashboard || Add Item</title></Helmet>
-            <SectionTitle
-            subHeading={"What's New"}
-            heading={"Ad An Item"}
-            ></SectionTitle>
-
-<div className="card-body mt-8 rounded-lg bg-[#F3F3F3]">
-                <form >
-                    <div className="grid md:grid-cols-2 grid-cols-1 gap-6  ">
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">Seller Name</span>
-                            </label>
-                            <input type="text" name='sellerName' placeholder="Seller Name" className="input input-bordered" />
-                        </div>
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">Seller Email</span>
-                            </label>
-                            <input type="email" name='sellerEmail' placeholder="Seller Email" className="input input-bordered" />
-                        </div>
-
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">Toy Name</span>
-                            </label>
-                            <input type="text" name='toyName' required placeholder="Toy Name" className="input input-bordered" />
-                        </div>
-
-                        <div className="form-control ">
-                            <label className="label">
-                                <span className="label-text font-semibold">Toy Photo URL</span>
-                            </label>
-                            <input name="toyPhoto" type="text" placeholder="Toy Photo URL" className="input input-bordered" />
-                        </div>
-
-                        <div className="form-control">
-
-                            <label className="label">
-                                <span className="label-text">Sub Category</span>
-                            </label>
-                            <select className="text-input  input input-bordered" name="toyCategory"  >
-                                <option value="Sports Car">Sports Car</option>
-                                <option value="Police Cars">Police Car</option>
-                                <option value="Mini Fire Truck">Mini Fire Truck</option>
-                            </select>
-                        </div>
-
-
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">Toy Price</span>
-                            </label>
-                            <input type="text" name='toyPrice' placeholder="$ Price" required className="input input-bordered" />
-
-                        </div>
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">Quantity</span>
-                            </label>
-                            <input type="text" name='toyQuantity' placeholder="Available quantity" required className="input input-bordered" />
-
-                        </div>
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text">Rating</span>
-                            </label>
-                            <input type="number" name='toyRating' placeholder="Rating" required className="input input-bordered" />
-
-                        </div>
-                        <div className="form-control w-full">
-                            <label className="label">
-                                <span className="label-text">Descriptions</span>
-                            </label>
-                            <textarea className="p-4 caret-pink-500 input input-bordered" name="toyDetails" type="text" placeholder="Toy's Details" id="" cols="30" rows="10"></textarea>
-                        </div>
+        <div className="w-full px-10">
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="form-control w-full mb-4">
+                    <label className="label">
+                        <span className="label-text font-semibold">Recipe Name*</span>
+                    </label>
+                    <input type="text" placeholder="Recipe Name"
+                        {...register("name", { required: true, maxLength: 120 })}
+                        className="input input-bordered w-full " />
+                </div>
+                <div className="flex my-4">
+                    <div className="form-control w-full ">
+                        <label className="label">
+                            <span className="label-text">Category*</span>
+                        </label>
+                        <select defaultValue="Pick One" {...register("category", { required: true })} className="select select-bordered">
+                            <option disabled>Pick One</option>
+                            <option>Pizza</option>
+                            <option>Soup</option>
+                            <option>Salad</option>
+                            <option>Dessert</option>
+                            <option>Desi</option>
+                            <option>Drinks</option>
+                        </select>
                     </div>
-                    <div className="form-control mt-6">
-                        <button className="btn bg-[#FF3811]">Add Toy</button>
+                    <div className="form-control w-full ml-4">
+                        <label className="label">
+                            <span className="label-text font-semibold">Price*</span>
+                        </label>
+                        <input type="number" {...register("price", { required: true })} placeholder="Type here" className="input input-bordered w-full " />
                     </div>
-                </form>
-            </div>
+                </div>
+                <div className="form-control">
+                    <label className="label">
+                        <span className="label-text">Recipe Details</span>
+                    </label>
+                    <textarea {...register("recipe", { required: true })} className="textarea textarea-bordered h-24" placeholder="Bio"></textarea>
+                </div>
+                <div className="form-control w-full my-4">
+                    <label className="label">
+                        <span className="label-text">Item Image*</span>
+                    </label>
+                    <input type="file" {...register("image", { required: true })} className="file-input file-input-bordered w-full " />
+                </div>
+                <input className="btn btn-sm mt-4" type="submit" value="Add Item" />
+            </form>
         </div>
     );
 };

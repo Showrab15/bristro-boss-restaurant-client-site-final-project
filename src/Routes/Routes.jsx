@@ -12,60 +12,134 @@ import MyCart from "../Pages/Dashboard/MyCart";
 import AllUsers from "../Pages/Dashboard/AllUsers/AllUsers";
 import AdminRoute from "./AdminRoute";
 import AddItem from "../Pages/Dashboard/AddItem/AddItem";
+import ManageItems from "../Pages/Dashboard/ManageItems/ManageItems";
+import Payment from "../Pages/Dashboard/Payment/Payment";
 
 
-const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Main></Main>,
-      children: [
-        {
-            path : '/',
-            element: <Home></Home>
-        },
-        {
-          path : 'menu',
-          element: <Menu></Menu>
-        },
-        {
-          path : 'order/:category',
-          element: <Order></Order>
-        },
-        {
-          path : '/login',
-          element: <Login></Login>
-        },
-        {
-          path : '/register',
-          element: <Register></Register>
-        },
-        {
-          path : 'secret',
-          element: <PrivateRoute><Secret></Secret></PrivateRoute>
-        }
-      ],
+// const router = createBrowserRouter([
+//     {
+//       path: "/",
+//       element: <Main></Main>,
+//       children: [
+//         {
+//             path : '/',
+//             element: <Home></Home>
+//         },
+//         {
+//           path : 'menu',
+//           element: <Menu></Menu>
+//         },
+//         {
+//           path : 'order/:category',
+//           element: <Order></Order>
+//         },
+//         {
+//           path : '/login',
+//           element: <Login></Login>
+//         },
+//         {
+//           path : '/register',
+//           element: <Register></Register>
+//         },
+//         {
+//           path : 'secret',
+//           element: <PrivateRoute><Secret></Secret></PrivateRoute>
+//         }
+//       ],
     
-    },
-    {
-      path: 'dashboard',
-      element:<PrivateRoute> <Dashboard></Dashboard></PrivateRoute> ,
-      children : [
-        {
-          path: 'myCart',
-          element: <MyCart></MyCart>
-        },
-        {
-          path : 'allusers',
-          element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
-        },
-        {
-          path : 'addItem',
-          element: <AdminRoute><AddItem></AddItem></AdminRoute>
-        }
-      ]
-    }
-  ]);
+//     },
+//     {
+//       path: 'dashboard',
+//       element:<PrivateRoute> <Dashboard></Dashboard></PrivateRoute> ,
+//       children : [
+//         {
+//           path: 'myCart',
+//           element: <MyCart></MyCart>
+//         },
+//         {
+//           path : 'allusers',
+//           element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
+//         },
+//         {
+//           path : 'addItem',
+//           element: <AdminRoute><AddItem></AddItem></AdminRoute>
+//         }
+//       ]
+//     }
+//   ]);
 
 
-  export default router
+//   export default router
+
+
+
+// import {
+//   createBrowserRouter,
+// } from "react-router-dom";
+
+
+ const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Main></Main>,
+    children: [
+      {
+          path: '/',
+          element: <Home></Home>
+      }, 
+      {
+        path: 'menu', 
+        element: <Menu></Menu>
+      },
+      {
+        path: 'order/:category',
+        element: <Order></Order>
+      },
+      {
+        path: 'login',
+        element: <Login></Login>
+      },
+      {
+        path: 'register',
+        element: <Register></Register>
+      },
+      {
+        path: 'secret',
+        element: <PrivateRoute><Secret></Secret></PrivateRoute>
+      }
+    ]
+  },
+  {
+    path: 'dashboard',
+    element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>, 
+    children: [
+
+      //user routes
+      {
+        path: 'myCart', 
+        element: <MyCart></MyCart>
+      },
+      {
+        path : "payment",
+        element: <Payment></Payment>
+      },
+
+      //admin routes
+      {
+        path: 'allusers', 
+        element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
+      },
+      {
+        path: 'addItem',
+        element: <AdminRoute><AddItem></AddItem></AdminRoute>
+      },
+      {
+        path : 'manageItems',
+        element: <AdminRoute><ManageItems></ManageItems></AdminRoute>
+      }
+    ]
+  }
+]);
+
+export default router
   

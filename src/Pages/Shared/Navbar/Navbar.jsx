@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { FaShoppingCart } from 'react-icons/fa';
 import useCart from '../../../hooks/useCart';
 import useAuth from '../../../hooks/useAuth';
+import useAdmin from '../../../hooks/useAdmin';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -11,7 +12,7 @@ const Navbar = () => {
 
     const { user, logOut } = useAuth();
 
-
+const [isAdmin] = useAdmin()
     const [cart] = useCart()
     const handleLogOut = () => {
         logOut()
@@ -42,9 +43,12 @@ const Navbar = () => {
         </li>
 
         <li>
-            <Link to='/Dashboard' aria-label='Dashboard' title='Dashboard'>
+            {
+                isAdmin &&  <Link to='/Dashboard' aria-label='Dashboard' title='Dashboard'>
                 Dashboard
             </Link>
+            }
+           
         </li>
 
         <li>
@@ -85,14 +89,14 @@ const Navbar = () => {
         </li>
 
         <li>
-            <Link
+        {isAdmin && <Link
                 to='/secret'
                 aria-label='secret'
                 title='secret'
                 className={({ isActive }) => (isActive ? 'active' : 'default')}
             >
                 Secret
-            </Link>
+            </Link>}
         </li>
 
 {

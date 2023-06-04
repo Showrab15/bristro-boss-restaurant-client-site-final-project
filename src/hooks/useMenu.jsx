@@ -1,20 +1,30 @@
+import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react"
+import useAxiosSecure from "./useAxiosSecure";
 
 const useMenu = () => {
-    const [menu, setMenu] = useState([])
-const [loading , setLoading] = useState(false)
+//     const [menu, setMenu] = useState([])
+//  const [loading , setLoading] = useState(false)
 
-    useEffect(() => {
-        fetch('http://localhost:5000/menu')
-            .then(res => res.json())
-            .then(data => {
-                // console.log(data)
-                setMenu(data)
-                setLoading(false)
-            })
-    }, [])
+//     useEffect(() => {
+//         fetch('http://localhost:5000/menu')
+//             .then(res => res.json())
+//             .then(data => {
+//                 // console.log(data)
+//                 setMenu(data)
+//                 setLoading(false)
+//             })
+//     }, [])
+const {data: menu = [], isLoading: loading, refetch} = useQuery({
+    queryKey: ['menu'],
+    queryFn: async() => {
+        const res = await fetch('http://localhost:5000/menu');
+        return res.json();
+    }
+})
 
-    return [menu, loading]
+return [menu, loading, refetch]
 }
+
 
 export default useMenu;
