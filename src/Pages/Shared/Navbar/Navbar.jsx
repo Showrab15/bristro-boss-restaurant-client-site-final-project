@@ -42,14 +42,7 @@ const [isAdmin] = useAdmin()
             </Link>
         </li>
 
-        <li>
-            {
-                isAdmin &&  <Link to='/Dashboard' aria-label='Dashboard' title='Dashboard'>
-                Dashboard
-            </Link>
-            }
-           
-        </li>
+     
 
         <li>
             <Link
@@ -89,14 +82,22 @@ const [isAdmin] = useAdmin()
         </li>
 
         <li>
-        {isAdmin && <Link
-                to='/secret'
-                aria-label='secret'
-                title='secret'
+        {isAdmin ? <Link
+                to='/dashboard/adminhome'
+                aria-label=''
+                title=''
                 className={({ isActive }) => (isActive ? 'active' : 'default')}
             >
-                Secret
-            </Link>}
+                Dashboard 
+            </Link> :<Link
+                to='/dashboard/userhome'
+                aria-label=''
+                title=''
+                className={({ isActive }) => (isActive ? 'active' : 'default')}
+            >
+                Dashboard 
+            </Link>
+            }
         </li>
 
 {
